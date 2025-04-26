@@ -44,10 +44,10 @@ router.post("/update",requireRole('Admin'), async (req, res) => {
     const { train_no, origin, destination, departure, arrival } = req.body;
   
     try {
-      await Train.updateOne(
-        { train_no },
-        { origin, destination, departure, arrival }
-      );
+      // await Train.updateOne(
+      //   { train_no },
+      //   { origin, destination, departure, arrival }
+      // );
       res.redirect("/admin");
     } catch (error) {
       console.error("Error updating train:", error.message);
