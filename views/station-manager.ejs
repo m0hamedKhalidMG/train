@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Station Manager - Railway Management System</title>
+    <link rel="stylesheet" href="/styles/station-manager.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <h1><i class="fas fa-clipboard"></i> Station Manager Dashboard</h1>
+        <nav>
+          <ul>
+            <li><a href="/">Home</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="station-manager">
+      <section class="dashboard">
+        <h2>Welcome, Station Manager!</h2>
+        <p>
+          Manage platforms, monitor train schedules, and oversee station
+          operations efficiently using this dashboard.
+        </p>
+      </section>
+
+      <section id="platform-management" class="hidden">
+        <h2>Platform Management</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Platform No</th>
+              <th>Train No</th>
+              <th>Arrival</th>
+              <th>Departure</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% platforms.forEach(platform => { %>
+            <tr>
+              <td><%= platform.platform_no %></td>
+              <td><%= platform.train_no %></td>
+              <td><%= platform.arrival %></td>
+              <td><%= platform.departure %></td>
+              <td><%= platform.status %></td>
+              <td>
+                <form
+                  action="/station-manager/delete/<%= platform.id %>"
+                  method="POST"
+                >
+                  <button type="submit" class="btn-delete">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <form action="/station-manager/add" method="POST" class="form-add">
+          <h3>Add New Platform</h3>
+          <label for="platform_no">Platform Number:</label>
+          <input type="text" id="platform_no" name="platform_no" required />
+
+          <label for="train_no">Train Number:</label>
+          <input type="text" id="train_no" name="train_no" required />
+
+          <label for="arrival">Arrival Time:</label>
+          <input type="time" id="arrival" name="arrival" required />
+
+          <label for="departure">Departure Time:</label>
+          <input type="time" id="departure" name="departure" required />
+
+          <label for="status">Status:</label>
+          <select id="status" name="status" required>
+            <option value="Occupied">Occupied</option>
+            <option value="Vacant">Vacant</option>
+          </select>
+
+          <button type="submit" class="btn-add">Add Platform</button>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      function showPlatformManagement() {
+        document
+          .getElementById("platform-management")
+          .classList.toggle("hidden");
+      }
+    </script>
+  </body>
+</html>

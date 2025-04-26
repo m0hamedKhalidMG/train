@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Train Operator - Railway Management System</title>
+    <link rel="stylesheet" href="/styles/train-operator.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <h1><i class="fas fa-route"></i> Train Operator Dashboard</h1>
+        <nav>
+          <ul>
+            <li><a href="/">Home</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="train-operator">
+      <section class="dashboard">
+        <h2>Welcome, Train Operator!</h2>
+        <p>
+          Manage and monitor train schedules, statuses, and operations. Ensure
+          timely and efficient train services with this dashboard.
+        </p>
+      </section>
+
+      <section id="train-status">
+        <h2>Active Train Status</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Train No</th>
+              <th>Origin</th>
+              <th>Destination</th>
+              <th>Departure Time</th>
+              <th>Arrival Time</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% trains.forEach(train => { %>
+            <tr>
+              <td><%= train.train_no %></td>
+              <td><%= train.origin %></td>
+              <td><%= train.destination %></td>
+              <td><%= train.departure %></td>
+              <td><%= train.arrival %></td>
+              <td><%= train.status %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="train-schedule" class="hidden">
+        <h2>Train Schedule Management</h2>
+        <form
+          id="schedule-form"
+          action="/train-operator/schedule"
+          method="POST"
+        >
+          <label for="train-no">Train Number:</label>
+          <input type="text" id="train-no" name="train_no" required />
+
+          <label for="origin">Origin:</label>
+          <input type="text" id="origin" name="origin" required />
+
+          <label for="destination">Destination:</label>
+          <input type="text" id="destination" name="destination" required />
+
+          <label for="departure">Departure Time:</label>
+          <input type="time" id="departure" name="departure" required />
+
+          <label for="arrival">Arrival Time:</label>
+          <input type="time" id="arrival" name="arrival" required />
+
+          <label for="status">Status:</label>
+          <select id="status" name="status" required>
+            <option value="On Time">On Time</option>
+            <option value="Delayed">Delayed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+
+          <button type="submit" class="btn">Add Train</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        © 2025 Railway Management System - Train Operator Dashboard. All rights
+        reserved.
+      </p>
+    </footer>
+
+    <script src="/scripts/train-operator.js"></script>
+  </body>
+</html>

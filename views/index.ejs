@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Railway Management System</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      /* Dropdown Menu Styles */
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+      }
+
+      nav ul li {
+        position: relative;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        padding: 10px 15px;
+        display: inline-block;
+
+        transition: color 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: #007bff;
+      }
+
+      nav ul li .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        color: #007bff;
+
+        background-color: #2321c5;
+        border-radius: 4px;
+        z-index: 1000;
+      }
+
+      nav ul li .dropdown-menu li {
+        padding: 10px;
+      }
+
+      nav ul li .dropdown-menu li a {
+        display: block;
+      }
+
+      nav ul li .dropdown-menu li a:hover {
+        background-color: #f8f9fa;
+      }
+
+      nav ul li:hover .dropdown-menu {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <h1><i class="fas fa-train"></i> Railway Management System</h1>
+        <nav>
+          <ul>
+            <% if (user && user.role === 'Passenger') { %>
+            <li><a href="/passenger">Passenger</a></li>
+            <% } %> <% if (user && user.role === 'Admin') { %>
+            <li><a href="/admin" class="active">Admin</a></li>
+            <% } %> <% if (user && user.role === 'Station Manager') { %>
+            <li><a href="/station-manager">Station Manager</a></li>
+            <% } %> <% if (user && user.role === 'Train Operator') { %>
+            <li><a href="/train-operator">Train Operator</a></li>
+            <% } %>
+            <!-- Dropdown Menu -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle"
+                ><i class="fas fa-user-circle"></i> Account</a
+              >
+              <ul class="dropdown-menu">
+                <% if (!user) { %>
+                <li><a href="user/login">Login</a></li>
+                <% } else { %>
+                <li><a href="user/logout">Logout</a></li>
+                <% } %>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="overview">
+        <h2>Welcome to the Railway Management System</h2>
+        <p>
+          Our system ensures seamless and efficient management of railway
+          operations. Explore various functionalities tailored for passengers,
+          administrators, station managers, and train operators.
+        </p>
+        <div class="image-container">
+          <img src="/train.jpg" alt="Train" />
+        </div>
+      </section>
+
+      <section class="features">
+        <h2>Key Features</h2>
+        <div class="grid">
+          <div class="feature-card">
+            <i class="fas fa-ticket-alt"></i>
+            <h3>Ticket Booking</h3>
+            <p>
+              Book tickets online quickly and easily with real-time availability
+              and secure payments.
+            </p>
+          </div>
+          <div class="feature-card">
+            <i class="fas fa-map-marked-alt"></i>
+            <h3>Real-Time Train Tracking</h3>
+            <p>
+              Stay updated with live train locations to plan your journey
+              efficiently.
+            </p>
+          </div>
+          <div class="feature-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Secure Management</h3>
+            <p>
+              Advanced security measures ensure the safety of passengers and
+              railway operations.
+            </p>
+          </div>
+          <div class="feature-card">
+            <i class="fas fa-tools"></i>
+            <h3>Maintenance Scheduling</h3>
+            <p>
+              Streamline train and equipment maintenance for uninterrupted
+              services.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <h2>Get Started</h2>
+        <p>
+          Select your role and explore the features designed for you. Whether
+          you're a passenger, admin, station manager, or train operator, our
+          system makes your tasks easier and more efficient.
+        </p>
+        <div class="cta-buttons">
+          <a href="/passenger" class="btn">Passenger Portal</a>
+          <a href="/admin" class="btn">Admin Dashboard</a>
+          <a href="/station-manager" class="btn">Station Manager</a>
+          <a href="/train-operator" class="btn">Train Operator</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 Railway Management System. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

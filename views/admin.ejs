@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Railway Management System</title>
+    <link rel="stylesheet" href="/styles/admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style></style>
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <h1><i class="fas fa-user-shield"></i> Admin Dashboard</h1>
+        <nav>
+          <ul>
+            <li><a href="/">Home</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="admin">
+      <section class="dashboard">
+        <h2>Welcome, Admin!</h2>
+        <p>
+          Manage trains, passengers, schedules, and view reports seamlessly from
+          this dashboard.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <h3><i class="fas fa-chart-line"></i> Reports</h3>
+            <p>Generate detailed reports on system performance.</p>
+            <button
+              class="btn"
+              onclick="window.location.href='/station-manager/reports'"
+            >
+              View Reports
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="">
+        <h2>Train Management</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Train No</th>
+              <th>Origin</th>
+              <th>Destination</th>
+              <th>Departure</th>
+              <th>Arrival</th>
+              <th>status</th>
+
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% trains.forEach(train => { %>
+            <tr>
+              <td><%= train.train_no %></td>
+              <td><%= train.origin %></td>
+              <td><%= train.destination %></td>
+              <td><%= train.departure %></td>
+              <td><%= train.arrival %></td>
+              <td><%= train.status %></td>
+
+              <td>
+                <form
+                  method="POST"
+                  action="/admin/delete/<%= train.train_no %>"
+                  style="display: inline"
+                >
+                  <button class="btn-delete">Delete</button>
+                </form>
+                <button
+                  class="btn-update"
+                  onclick="openUpdateForm('<%= train.train_no %>', '<%= train.origin %>', '<%= train.destination %>', '<%= train.departure %>', '<%= train.arrival %>')"
+                >
+                  Update
+                </button>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        <div id="update-form" class="modal" style="display: none">
+          <div class="modal-content">
+            <span class="close" onclick="closeUpdateForm()">&times;</span>
+            <h3>Update Train</h3>
+            <form
+              action="/admin/update"
+              method="POST"
+              class="update-train-form"
+            >
+              <input type="hidden" id="update-train_no" name="train_no" />
+
+              <div class="form-group">
+                <label for="update-origin">Origin</label>
+                <input type="text" id="update-origin" name="origin" required />
+              </div>
+
+              <div class="form-group">
+                <label for="update-destination">Destination</label>
+                <input
+                  type="text"
+                  id="update-destination"
+                  name="destination"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="update-departure">Departure Time</label>
+                <input
+                  type="time"
+                  id="update-departure"
+                  name="departure"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="update-arrival">Arrival Time</label>
+                <input
+                  type="time"
+                  id="update-arrival"
+                  name="arrival"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="btn-update">Update Train</button>
+            </form>
+          </div>
+        </div>
+        <section id="train-management">
+          <h3>Add New Train</h3>
+          <div class="form-container">
+            <form action="/admin/add" method="POST" class="add-train-form">
+              <div class="form-group">
+                <label for="train_no">Train No</label>
+                <input
+                  type="text"
+                  id="train_no"
+                  name="train_no"
+                  placeholder="Enter Train No"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="origin">Origin</label>
+                <input
+                  type="text"
+                  id="origin"
+                  name="origin"
+                  placeholder="Enter Origin"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="destination">Destination</label>
+                <input
+                  type="text"
+                  id="destination"
+                  name="destination"
+                  placeholder="Enter Destination"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="departure">Departure Time</label>
+                <input type="time" id="departure" name="departure" required />
+              </div>
+
+              <div class="form-group">
+                <label for="arrival">Arrival Time</label>
+                <input type="time" id="arrival" name="arrival" required />
+              </div>
+
+              <button type="submit" class="btn-add">Add Train</button>
+            </form>
+          </div>
+        </section>
+      </section>
+
+      <script>
+        function openUpdateForm(
+          trainNo,
+          origin,
+          destination,
+          departure,
+          arrival
+        ) {
+          // Set the form fields with the current train data
+          document.getElementById("update-train_no").value = trainNo;
+          document.getElementById("update-origin").value = origin;
+          document.getElementById("update-destination").value = destination;
+          document.getElementById("update-departure").value = departure;
+          document.getElementById("update-arrival").value = arrival;
+
+          // Show the modal
+          document.getElementById("update-form").style.display = "block";
+        }
+
+        function closeUpdateForm() {
+          // Hide the modal
+          document.getElementById("update-form").style.display = "none";
+        }
+      </script>
+    </main>
+
+    <footer>
+      <p>
+        © 2025 Railway Management System - Admin Dashboard. All rights reserved.
+      </p>
+    </footer>
+  </body>
+</html>

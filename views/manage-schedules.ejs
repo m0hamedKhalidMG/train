@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Schedules</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+  </head>
+  <body>
+    <h1>Manage Train Schedules</h1>
+    <div class="schedule-list">
+      <h3>Train Schedules</h3>
+      <ul id="schedule-container"></ul>
+    </div>
+
+    <script>
+      // Fetch schedules from the backend and display them
+      async function fetchSchedules() {
+        try {
+          const response = await axios.get("/api/schedules");
+          const schedules = response.data;
+
+          const container = document.getElementById("schedule-container");
+          container.innerHTML = schedules
+            .map(
+              (schedule) => `
+          <li>
+            Train No: ${schedule.trainNo}, Origin: ${schedule.origin}, Destination: ${schedule.destination}
+            <button onclick="editSchedule(${schedule.id})">Edit</button>
+            <button onclick="deleteSchedule(${schedule.id})">Delete</button>
+          </li>
+        `
+            )
+            .join("");
+        } catch (error) {
+          console.error("Error fetching schedules:", error);
+        }
+      }
+
+      // Example functions for editing and deleting schedules
+      function editSchedule(id) {
+        alert(`Edit schedule with ID: ${id}`);
+        // Add logic to open an edit form or navigate to an edit page
+      }
+
+      function deleteSchedule(id) {
+        alert(`Delete schedule with ID: ${id}`);
+        // Add logic to send a DELETE request to the backend
+      }
+
+      // Fetch schedules when the page loads
+      fetchSchedules();
+    </script>
+  </body>
+</html>
