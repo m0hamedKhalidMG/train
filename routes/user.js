@@ -31,7 +31,6 @@ router.get('/signup', (req, res) => {
     const { email, password } = req.body;
     try {
       const user = null
-          //await User.findOne({ email });
       if (user && (await bcrypt.compare(password, user.password))) {
         console.log(user)
 
