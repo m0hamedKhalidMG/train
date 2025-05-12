@@ -41,7 +41,17 @@ router.post("/delete/:train_no",requireRole('Admin'), async (req, res) => {
   }
 });
 router.post("/update",requireRole('Admin'), async (req, res) => {
-    res.status(500).send("Failed to delete train");
+    const { train_no, origin, destination, departure, arrival } = req.body;
   
+    try {
+      await Train.updateOne(
+        { train_no },
+        { origin, destination, departure, arrival }
+      );
+      res.redirect("/admin");
+    } catch (error) {
+      console.error("Error updating train:", error.message);
+      res.status(500).send("Failed to update train");
+    }
   });
 module.exports = router;
