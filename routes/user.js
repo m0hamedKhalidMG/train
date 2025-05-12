@@ -28,9 +28,9 @@ router.get('/signup', (req, res) => {
   
   // Handle Login
   router.post('/login', async (req, res) => {
-    const {  password } = req.body;
+    const { email, password } = req.body;
     try {
-      const user = null
+      const user = await User.findOne({ email });
       if (user && (await bcrypt.compare(password, user.password))) {
         console.log(user)
 
